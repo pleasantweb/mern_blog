@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userData } from "../../../types";
 const { REACT_APP_BACKEND_URL } = process.env;
-console.log(REACT_APP_BACKEND_URL);
+
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({ baseUrl: `${REACT_APP_BACKEND_URL}/auth/` }),
+  keepUnusedDataFor:5,
   endpoints: (builder) => ({
     userRegister: builder.mutation({
       query: (body) => ({
@@ -40,20 +40,7 @@ export const authApi = createApi({
         credentials: "include",
       }),
     }),
-    getUserData: builder.query<userData,string>({
-      query: () => ({
-        url: "login/success",
-        method: "GET",
-        credentials:'include'
-      }),
-    }),
-    // logoutUser:builder.query({
-    //   query:()=>({
-    //     url:'logout',
-    //     method:"GET",
-    //     credentials:'include'
-    //   })
-    // })
+    
   }),
 });
 
@@ -61,18 +48,6 @@ export const {
   useUserRegisterMutation,
   useUserActivationMutation,
   useUserLoginMutation,
-  useGetUserDataQuery,
-  // useLogoutUserQuery
+ 
 } = authApi;
 
-export const userLogout =async()=>{
-  const res = await fetch(`${REACT_APP_BACKEND_URL}/auth/logout`,{
-    method:"GET",
-    credentials:'include'
-  })
-  if(res.status === 200){
-    return true
-  }else{
-    return false
-  }
-}

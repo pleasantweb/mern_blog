@@ -40,8 +40,20 @@ router.get('/google/redirect',passport.authenticate('google',{
 })
 
 router.get('/logout',(req,res)=>{
-    req.logOut()
-    res.status(200).json({"success":"Logout success"})
+    // console.log('logout request',req);
+    try{
+        req.logout((err)=>{
+            if(err){
+                res.status(500).json(err.message)
+            }
+            res.status(200).json({"success":"Logout success"})
+        })
+        
+    }catch(err){
+        console.log(err);
+       res.status(500).json(err.message)
+    }
+   
 })
 
 

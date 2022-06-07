@@ -1,28 +1,24 @@
 import { useEffect } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
 import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks"
-import { useGetUserDataQuery } from "../reduxTool/features/auth/authApi"
-import { setCurrentUser } from "../reduxTool/features/auth/authSlice"
+import { authUserAsync } from "../reduxTool/features/auth/authAsync"
 import '../styles/blog.css'
 
 const Layout = () => {
-  const isAuthenticated = useAppSelector(state=>state.auth.isAuthenticated)
-  const {isSuccess,data} =useGetUserDataQuery('')
+
+  const location = useLocation()
   const dispatch = useAppDispatch()
+  const isAuthenticated = useAppSelector(state=>state.auth.isAuthenticated)
+ 
   useEffect(()=>{
-    if(!isAuthenticated){
-      if(data){
-        const obj = {data,isAuthenticated:true}
-        console.log(isSuccess,data,obj);
-      dispatch(setCurrentUser(obj))
-      }
-      console.log(isSuccess,data);
-      
-    }
-  },[isAuthenticated,data])
+     if(!isAuthenticated){
+    dispatch(authUserAsync())
+     }
+  },[isAuthenticated,location])
+
   return (
     <div className="site_container">
         <div className="container">

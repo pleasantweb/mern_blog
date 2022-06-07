@@ -4,6 +4,8 @@ import Activation from './pages/auth/Activation';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
+import NewArticle from './pages/user/NewArticle';
+import Profile from './pages/user/Profile';
 
 function App() {
   return (
@@ -15,6 +17,9 @@ function App() {
         <Route path='/auth/register' element={<Register />} />
         <Route path='/auth/activation' element={<Activation />} />
         <Route path='/auth/login' element={<Login />} />
+
+        <Route path='/profile/:userid' element={<Profile />} />
+        <Route path='/newarticle' element={<NewArticle />} />
            
       </Route>
     </Routes>
