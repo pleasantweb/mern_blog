@@ -16,3 +16,10 @@ export type payLoadUser = {
         isAuthenticated: boolean;
    
 }
+
+export type blogData = {
+    title:string,
+    blogImage:string,
+    category:string,
+    content :string
+}

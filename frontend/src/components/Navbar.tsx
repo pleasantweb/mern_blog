@@ -5,7 +5,6 @@ const Navbar = () => {
     <div className="nav-scroller py-1 mb-2">
     <nav className="nav d-flex justify-content-between">
       <a className="p-2 link-secondary" href="#">World</a>
-      <a className="p-2 link-secondary" href="#">U.S.</a>
       <a className="p-2 link-secondary" href="#">Technology</a>
       <a className="p-2 link-secondary" href="#">Design</a>
       <a className="p-2 link-secondary" href="#">Culture</a>
