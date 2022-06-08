@@ -18,8 +18,11 @@ export type payLoadUser = {
 }
 
 export type blogData = {
+    author:String,
     title:string,
     blogImage:string,
     category:string,
-    content :string
+    content :string,
+    status:string
 }
+export type blogState = Omit<blogData,'status' | 'author'>

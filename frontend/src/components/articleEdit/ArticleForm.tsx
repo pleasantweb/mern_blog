@@ -1,14 +1,19 @@
-import React from "react";
-import { blogData } from "../../types";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../reduxTool/app/hooks";
+import { useBlogCreateMutation } from "../../reduxTool/features/blog/blogApi";
+import { blogState } from "../../types";
 import CategoryPost from "../parts/CategoryPost";
 import { onFileChange } from "./helper";
 
 type propType = {
-  blog: blogData;
-  setBlog: React.Dispatch<React.SetStateAction<blogData>>;
+  blog: blogState;
+  setBlog: React.Dispatch<React.SetStateAction<blogState>>;
 };
 
 const ArticleForm = (props: propType) => {
+  const navigate = useNavigate()
+  const author = useAppSelector((state) => state.auth.user_id);
   const { blog, setBlog } = props;
   const { title, category, blogImage, content } = blog;
 
@@ -30,25 +35,37 @@ const ArticleForm = (props: propType) => {
       [e.target.name]: e.target.value,
     }));
   };
-  const onBlogImageChange =async (e:React.ChangeEvent<HTMLInputElement>) => {
-    let files : FileList | null = e.currentTarget.files
-    if(files !== null){
-        if(files.length >0){
-            const imageUrl =await onFileChange(files[0])
-            setBlog(prev=>({
-                ...prev,[e.target.name]:imageUrl
-            }))
-        }
+  const onBlogImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let files: FileList | null = e.currentTarget.files;
+    if (files !== null) {
+      if (files.length > 0) {
+        const imageUrl = await onFileChange(files[0]);
+        setBlog((prev) => ({
+          ...prev,
+          [e.target.name]: imageUrl,
+        }));
+      }
     }
   };
-const onSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault()
+
+  const [postBlog, res] = useBlogCreateMutation();
+  const { isSuccess, isError, data } = res;
+
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>,status: string) => {
+    e.preventDefault();
     console.log(blog);
-    
-}
+    const body = { author, title, blogImage, category, content, status };
+    await postBlog(body);
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`/profile/${author}`)
+    }
+  }, [isSuccess]);
 
   return (
-    <form action="" style={{ marginBottom: "50px" }} onSubmit={onSubmit}>
+    <form action="" style={{ marginBottom: "50px" }} onSubmit={e=>e.preventDefault()}>
       <div className="mb-3">
         <label htmlFor="exampleFormControlInput1" className="form-label">
           Title
@@ -86,17 +103,30 @@ const onSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
       <div className="form-floating mb-5 mt-5">
         <textarea
           className="form-control"
-          placeholder="Leave a comment here"
+          placeholder="Content..."
           id="floatingTextarea2"
           style={{ height: "100px" }}
           name="content"
           onChange={onContentChange}
         ></textarea>
-        <label htmlFor="floatingTextarea2">Content...</label>
+        
       </div>
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
+      <div>
+        <button
+          onClick={(e) => onSubmit(e, "draft")}
+          type="submit"
+          className="btn btn-primary"
+        >
+          Draft
+        </button>
+        <button
+          onClick={(e) => onSubmit(e, "publish")}
+          type="submit"
+          className="btn btn-primary mx-4"
+        >
+          Publish
+        </button>
+      </div>
     </form>
   );
 };

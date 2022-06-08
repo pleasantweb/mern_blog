@@ -14,7 +14,7 @@ const CategoryPost = () => {
   ];
   return (
     <>
-      <option disabled>Category</option>
+      <option  disabled>Category</option>
       {Category.map((v, i) => (
         <option className="text-capitalize" key={i} value={v}>
           {v}

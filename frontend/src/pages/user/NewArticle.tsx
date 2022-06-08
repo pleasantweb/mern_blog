@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import ArticleForm from '../../components/articleEdit/ArticleForm';
-import { blogData } from '../../types';
+import { blogState } from '../../types';
 
 
 const NewArticle = () => {
-    const [blog,setBlog] = useState<blogData>({
+    const [blog,setBlog] = useState<blogState>({
         title:'',
         blogImage:'',
         category:'',
-        content :''
+        content :'',
     })
 
   return (

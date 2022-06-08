@@ -2,13 +2,28 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const blogSchema = new Schema({
-    user:{
+    author:{
         type:Schema.Types.ObjectId,
         ref:"User"
     },
     title:{
         required:true,
         type:String
+    },
+    category:{
+        type:String,
+        enum:[ "world",
+        "technology",
+        "design",
+        "culture",
+        "business",
+        "politics",
+        "opinion",
+        "science",
+        "health",
+        "style",
+        "travel"],
+        default:'world'
     },
     blogImage:String,
     content:String,
@@ -18,16 +33,10 @@ const blogSchema = new Schema({
     },
     status:{
         type:String,
-        enum:['draft','upload'],
+        enum:['draft','publish'],
         default:'draft'
-    },
-    reaction:{
-        thumbsUp:Number,
-        heart:Number,
-        wow:Number,
-        rocket:Number,
-        coffee:Number
     }
+    
 })
 
 module.exports = mongoose.model('Blog',blogSchema)
