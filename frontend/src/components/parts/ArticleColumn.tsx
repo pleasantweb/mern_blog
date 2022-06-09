@@ -1,10 +1,16 @@
+import { blogData } from "../../types";
 
-
-const ArticleColumn = () => {
+type propType={
+  v: blogData & {
+    _id: string;
+}
+}
+const ArticleColumn = (props:propType) => {
+  const {v} = props
   return (
     <div className="col">
               <div className="card shadow-sm">
-                <svg
+                {/* <svg
                   className="bd-placeholder-img card-img-top"
                   width="100%"
                   height="225"
@@ -13,16 +19,17 @@ const ArticleColumn = () => {
                   aria-label="Placeholder: صورة مصغرة"
                   preserveAspectRatio="xMidYMid slice"
                   focusable="false"
-                >
-                  <title>Placeholder</title>
+                > */}
+                  <img src={v.blogImage} alt={v.title}  className="bd-placeholder-img card-img-top" />
+                  {/* <title>Placeholder</title>
                   <rect width="100%" height="100%" fill="#55595c" />
                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">
                     Image
                   </text>
-                </svg>
+                </svg> */}
 
                 <div className="card-body">
-                  <p className="card-text">This is Title</p>
+                  <p className="card-text">{v.title}</p>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="btn-group">
                       <button

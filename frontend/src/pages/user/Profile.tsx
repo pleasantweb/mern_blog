@@ -1,9 +1,25 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ArticleColumn from "../../components/parts/ArticleColumn";
-import { useAppSelector } from "../../reduxTool/app/hooks";
+import { useAppDispatch, useAppSelector } from "../../reduxTool/app/hooks";
+import { useCurrentAuthorBlogQuery } from "../../reduxTool/features/blog/blogApi";
+import { setAuthorData } from "../../reduxTool/features/blog/blogSlice";
 
 const Profile = () => {
+
+  const dispatch = useAppDispatch()
   const username = useAppSelector((state) => state.auth.username);
+  const userId = useAppSelector(state=>state.auth.user_id)
+  const authorData = useAppSelector(state=>state.blog.authorBlogs)
+  const {isSuccess,isError,data} = useCurrentAuthorBlogQuery(userId)
+  console.log(data);
+
+  useEffect(()=>{
+     if(isSuccess){
+       dispatch(setAuthorData(data))
+     }
+  },[isSuccess,data])
+
   return (
     <main>
       <section className="py-5 text-center container">
@@ -23,7 +39,13 @@ const Profile = () => {
       <div className="album py-5 bg-light">
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <ArticleColumn />
+            {Array.isArray(authorData) && authorData.length ?(
+              authorData.map((v,i)=>(
+               <ArticleColumn key={i} v={v} />
+              ))
+              
+            ):('')}
+            
           </div>
         </div>
       </div>

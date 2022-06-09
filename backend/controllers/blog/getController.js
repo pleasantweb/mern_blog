@@ -2,6 +2,8 @@ const Blog = require('../../models/Blog')
 
 const getAuthorBlogs = async(req,res)=>{
    const userId = req.params.userId
+   console.log('userId',userId);
+   console.log('hai to req.user',req.user);
    try{
         if(userId !== req.user.user_id) return res.status(400).json({"error":"NO User found"})
         const findBlogs = await Blog.find({user:userId})

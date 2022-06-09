@@ -11,7 +11,7 @@ const { userAuthenticated } = require('../../middlewares/checkAuth')
 
 router.get('/',getAllBlogs)
 router.get('/:blogId',getBlogById)
-router.get('/author_blogs/:userId',userAuthenticated,getAuthorBlogs)
+router.get('/author_blogs/:userId',getAuthorBlogs)
 router.post('/',userAuthenticated,createBlog)
 router.put('/:blogId',userAuthenticated,updateBlog)
 router.delete('/:blogId',userAuthenticated,deleteBlog)

@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar"
 import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks"
 import { authUserAsync } from "../reduxTool/features/auth/authAsync"
 import { useAllBlogQuery } from "../reduxTool/features/blog/blogApi"
+import { setBlogData } from "../reduxTool/features/blog/blogSlice"
 import '../styles/blog.css'
 
 const Layout = () => {
@@ -21,6 +22,7 @@ const Layout = () => {
   },[isAuthenticated,location])
   useEffect(()=>{
     if(isSuccess){
+      dispatch(setBlogData(data))
       console.log(data);
     }
   },[isSuccess])

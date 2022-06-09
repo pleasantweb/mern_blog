@@ -6,13 +6,20 @@ export const blogApi = createApi({
     reducerPath:'blogApi',
     baseQuery:fetchBaseQuery({baseUrl:`${REACT_APP_BACKEND_URL}/blog`}),
     endpoints:(builder)=>({
-        allBlog:builder.query<blogData & {_id:string},string>({
+        allBlog:builder.query<(blogData & {_id:string})[],string>({
             query:()=>({
                 url:'/',
-                method:"GET"
+                method:"GET",
+                credentials: "include",
             })
         }),
-        blogCreate:builder.mutation<blogData & {_id:string},blogData>({
+        currentAuthorBlog:builder.query<(blogData & {_id:string})[],string>({
+            query:(userId)=>({
+                url:`/author_blogs/${userId}`,
+                credentials: "include",
+            })
+        }),
+        blogCreate:builder.mutation<blogData & {_id:string},Omit<blogData,'datePosted'> >({
             query:(body)=>({
                 url:'/',
                 method:"POST",
@@ -27,4 +34,4 @@ export const blogApi = createApi({
 
 });
 
-export const {useAllBlogQuery,useBlogCreateMutation} = blogApi;
+export const {useAllBlogQuery,useBlogCreateMutation,useCurrentAuthorBlogQuery} = blogApi;

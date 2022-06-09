@@ -14,6 +14,7 @@ router.get('/resendcode',resendActiveCode)
 //User login
 router.get('/login/success',(req,res)=>{
     console.log('yooo');
+    console.log('ye hai user',req.user);
     if (req.user) {
         res.status(200).json(req.user);
       }else{

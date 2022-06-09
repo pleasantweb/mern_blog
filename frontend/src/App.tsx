@@ -1,5 +1,6 @@
 import { Routes,Route } from 'react-router-dom';
 import Layout from './hoc/Layout';
+import Article from './pages/Article';
 import Activation from './pages/auth/Activation';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -20,6 +21,7 @@ function App() {
 
         <Route path='/profile/:userid' element={<Profile />} />
         <Route path='/newarticle' element={<NewArticle />} />
+        <Route path='/:articleId' element={<Article />} />
            
       </Route>
     </Routes>

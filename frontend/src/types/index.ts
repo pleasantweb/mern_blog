@@ -23,6 +23,15 @@ export type blogData = {
     blogImage:string,
     category:string,
     content :string,
-    status:string
+    status:string,
+    datePosted:string
 }
-export type blogState = Omit<blogData,'status' | 'author'>
+export type blogState = Omit<blogData,'status' | 'author' | 'datePosted'>
+
+export type blogInitalState = {
+    allBlogs:(blogData & {_id:string})[],
+    category:allCategories,
+    authorBlogs:(blogData & {_id:string})[]
+}
+export type allCategories = "all"|"world" |"technology"|"design"|"culture"|"business"|"politics"|"opinion"|"science"|"health"|"style"|"travel"
+
