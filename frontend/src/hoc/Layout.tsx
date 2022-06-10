@@ -5,8 +5,6 @@ import Header from "../components/Header"
 import Navbar from "../components/Navbar"
 import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks"
 import { authUserAsync } from "../reduxTool/features/auth/authAsync"
-import { useAllBlogQuery } from "../reduxTool/features/blog/blogApi"
-import { setBlogData } from "../reduxTool/features/blog/blogSlice"
 import '../styles/blog.css'
 
 const Layout = () => {
@@ -14,18 +12,13 @@ const Layout = () => {
   const location = useLocation()
   const dispatch = useAppDispatch()
   const isAuthenticated = useAppSelector(state=>state.auth.isAuthenticated)
- const {isSuccess,isError,data} = useAllBlogQuery('')
+
   useEffect(()=>{
      if(!isAuthenticated){
     dispatch(authUserAsync())
      }
-  },[isAuthenticated,location])
-  useEffect(()=>{
-    if(isSuccess){
-      dispatch(setBlogData(data))
-      console.log(data);
-    }
-  },[isSuccess])
+  },[isAuthenticated,location,dispatch])
+ 
 
   return (
     <div className="site_container">

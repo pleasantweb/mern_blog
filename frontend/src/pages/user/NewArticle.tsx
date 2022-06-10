@@ -14,7 +14,11 @@ const NewArticle = () => {
   return (
     <div className='container' style={{minHeight:'100vh'}}>
         <h1 className='text-center'>New Article</h1>
-       <ArticleForm blog={blog} setBlog={setBlog} />
+       <ArticleForm 
+           blog={blog} 
+           setBlog={setBlog} 
+           operation={'create'}
+           _id={''} />
     </div>
   )
 }

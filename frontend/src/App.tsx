@@ -7,6 +7,7 @@ import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import NewArticle from './pages/user/NewArticle';
 import Profile from './pages/user/Profile';
+import UpdateArticle from './pages/user/UpdateArticle';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
 
         <Route path='/profile/:userid' element={<Profile />} />
         <Route path='/newarticle' element={<NewArticle />} />
+        <Route path='/updatearticle/:articleid' element={<UpdateArticle />} />
         <Route path='/:articleId' element={<Article />} />
            
       </Route>

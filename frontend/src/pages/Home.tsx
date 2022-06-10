@@ -1,10 +1,12 @@
 import HomeColumn from "../components/parts/HomeColumn"
 import { useAppSelector } from "../reduxTool/app/hooks"
+import { useAllBlogQuery } from "../reduxTool/features/blog/blogApi"
 
 
 const Home = () => {
-  const allBlogs = useAppSelector(state=>state.blog.allBlogs)
+  // const allBlogs = useAppSelector(state=>state.blog.allBlogs)
   const currentCategory = useAppSelector(state=>state.blog.category)
+  const {isSuccess,isError,data} = useAllBlogQuery('')
   return (
     <main className="container">
   <div className="p-4 p-md-5 mb-4 text-white rounded bg-dark">
@@ -17,13 +19,13 @@ const Home = () => {
 
   <div className="row mb-2">
 
-   {Array.isArray(allBlogs) && allBlogs.length ? (
+   {Array.isArray(data) && data.length ? (
      currentCategory === 'all' ? (
-      allBlogs.map((v,i)=>(
+      data.map((v,i)=>(
         <HomeColumn key={i} v={v} />
       ))
      ):(
-       allBlogs.filter(v=>v.category === currentCategory).map((v,i)=>(
+       data.filter(v=>v.category === currentCategory).map((v,i)=>(
         <HomeColumn key={i} v={v} />
        ))
      )

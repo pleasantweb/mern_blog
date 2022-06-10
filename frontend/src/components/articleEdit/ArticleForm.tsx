@@ -1,21 +1,26 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../reduxTool/app/hooks";
-import { useBlogCreateMutation } from "../../reduxTool/features/blog/blogApi";
+import { useBlogCreateMutation, useBlogUpdateMutation } from "../../reduxTool/features/blog/blogApi";
 import { blogState } from "../../types";
 import CategoryPost from "../parts/CategoryPost";
 import { onFileChange } from "./helper";
 
 type propType = {
-  blog: blogState;
-  setBlog: React.Dispatch<React.SetStateAction<blogState>>;
+  blog: blogState,
+  setBlog: React.Dispatch<React.SetStateAction<blogState>>,
+  operation: 'create'  | 'update',
+  _id:string
 };
 
 const ArticleForm = (props: propType) => {
+
+  const { blog, setBlog,operation,_id } = props;
+  const { title, category, blogImage, content } = blog;
+
   const navigate = useNavigate()
   const author = useAppSelector((state) => state.auth.user_id);
-  const { blog, setBlog } = props;
-  const { title, category, blogImage, content } = blog;
+  
 
   const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBlog((prev) => ({
@@ -49,20 +54,27 @@ const ArticleForm = (props: propType) => {
   };
 
   const [postBlog, res] = useBlogCreateMutation();
-  const { isSuccess, isError, data } = res;
+
+  const [updateBlog,resp] = useBlogUpdateMutation()
+ 
 
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>,status: string) => {
     e.preventDefault();
     console.log(blog);
+    if(operation === 'create'){
     const body = { author, title, blogImage, category, content, status };
     await postBlog(body);
+    }else{
+      const body = { _id,author, title, blogImage, category, content, status };
+      await updateBlog(body)
+    }
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (res.isSuccess || resp.isSuccess) {
       navigate(`/profile/${author}`)
     }
-  }, [isSuccess]);
+  }, [res,resp,author,navigate]);
 
   return (
     <form action="" style={{ marginBottom: "50px" }} onSubmit={e=>e.preventDefault()}>
@@ -98,8 +110,12 @@ const ArticleForm = (props: propType) => {
           onChange={onBlogImageChange}
           type="file"
           id="formFile"
+          
         />
       </div>
+      {blogImage !== '' ? (
+        <img src={blogImage} alt={title} className="rounded mx-auto d-block" width={300} />
+      ):""}
       <div className="form-floating mb-5 mt-5">
         <textarea
           className="form-control"
@@ -108,6 +124,7 @@ const ArticleForm = (props: propType) => {
           style={{ height: "100px" }}
           name="content"
           onChange={onContentChange}
+          value={content}
         ></textarea>
         
       </div>
