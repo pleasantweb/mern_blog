@@ -35,6 +35,10 @@ const blogSchema = new Schema({
         type:String,
         enum:['draft','publish'],
         default:'draft'
+    },
+    likes:{
+     type:Number,
+     default:0  
     }
     
 })

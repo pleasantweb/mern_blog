@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useUserLoginMutation } from '../../reduxTool/features/auth/authApi'
 
 const Login = () => {
@@ -65,6 +65,9 @@ const Login = () => {
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
+        <div className='d-flex mt-4'>
+          <p>Not a User ?</p> <Link className='px-2' to='/auth/register'>Register</Link>
+        </div>
       </form>
     </div>
   )

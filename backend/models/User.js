@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const UserProfile = require('./UserProfile')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -27,4 +28,12 @@ const userSchema = new Schema({
     password:String,
     googleid:String
 })
+
+userSchema.post('save',async function(doc){
+    console.log('user this',this);
+   await UserProfile.create({
+    user:this._id
+   })
+})
+
 module.exports = mongoose.model('User',userSchema)

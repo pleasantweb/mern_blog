@@ -10,11 +10,22 @@ export type userData = {
     user_id: string
     username: string
 }
+export type authState={
+    user_id:string,
+    username:string,
+    email:string,
+    roles:{},
+    isAuthenticated:boolean,
+    likedArticles:string[]
+}
 export type payLoadUser = {
  
         data: userData;
         isAuthenticated: boolean;
    
+}
+export type likedArticlesByUser={
+    likedArticles:string[]
 }
 
 export type blogData = {
@@ -26,7 +37,7 @@ export type blogData = {
     status:string,
     datePosted:string
 }
-export type fullBlogData = blogData & {_id:string}
+export type fullBlogData = blogData & {_id:string,likes:number}
 export type blogState = Omit<blogData,'status' | 'author' | 'datePosted'>
 
 
@@ -34,4 +45,9 @@ export type allCategories = "all"|"world" |"technology"|"design"|"culture"|"busi
 
 export type blogInitalState = {
     category:allCategories,
+}
+
+export type likeUnlikeBody = {
+    article:string,
+    user:string
 }

@@ -1,14 +1,15 @@
 import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { payLoadUser } from "../../../types";
-import { authUserAsync, logoutAsync } from "./authAsync";
+import { authState, likedArticlesByUser, payLoadUser } from "../../../types";
+import { authUserAsync, likedArticlesAsync, logoutAsync } from "./authAsync";
 
 
-const initialState = {
+const initialState :authState= {
     user_id:'',
     username:'',
     email:'',
     roles:{},
-    isAuthenticated:false
+    isAuthenticated:false,
+    likedArticles:[]
 }
 
 
@@ -48,6 +49,13 @@ export const authSlice = createSlice({
                 state.username = username
                 state.email = email
                 state.roles = roles
+            }
+            
+        })
+        .addCase(likedArticlesAsync.fulfilled,(state,action)=>{
+            console.log(action);
+            if(action.payload){
+            state.likedArticles = action.payload
             }
             
         })

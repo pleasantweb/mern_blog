@@ -1,10 +1,10 @@
-import { blogData } from "../../types";
+import {  fullBlogData } from "../../types";
 import {formatDistance} from 'date-fns'
 import { AiOutlineHeart,AiOutlineComment } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 type propType={
-    v:blogData & {_id: string;}
+    v:fullBlogData
 }
 
 const HomeColumn = (props:propType) => {
@@ -28,7 +28,7 @@ const HomeColumn = (props:propType) => {
         <div>
         <div className="mb-1 text-muted">{returnDate(v.datePosted)}</div>
         <div className="d-flex mt-1">
-            <div>4 <AiOutlineHeart /></div>
+            <div>{v.likes} <AiOutlineHeart /></div>
             <div className="mx-3">5 <AiOutlineComment /></div>
           </div>
         {/* <p className="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p> */}

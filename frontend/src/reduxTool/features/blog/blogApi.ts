@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { blogData, fullBlogData } from "../../../types";
+import { blogData, fullBlogData, likeUnlikeBody } from "../../../types";
 const { REACT_APP_BACKEND_URL } = process.env;
 
 export const blogApi = createApi({
@@ -40,7 +40,7 @@ export const blogApi = createApi({
             invalidatesTags: ['BlogData']
         }),
 
-        blogUpdate:builder.mutation<fullBlogData,Omit<fullBlogData, "datePosted">>({
+        blogUpdate:builder.mutation<fullBlogData,Omit<fullBlogData, "datePosted" | "likes">>({
             query:(body)=>{
                let {_id} = body
                return {
@@ -63,6 +63,27 @@ export const blogApi = createApi({
             }),
             invalidatesTags: ['BlogData']
         }),
+        
+        blogLike:builder.mutation<any,likeUnlikeBody>({
+            query:(body)=>({
+                url:'/like_article',
+                method:"POST",
+                credentials:"include",
+                body:body
+            }),
+            invalidatesTags: ['BlogData']
+        }),
+
+        blogUnLike:builder.mutation<any,likeUnlikeBody>({
+            query:(body)=>({
+                url:'/unlike_article',
+                method:"POST",
+                credentials:"include",
+                body:body
+            }),
+            invalidatesTags: ['BlogData']
+        }),
+        
     }),
 });
 
@@ -71,5 +92,7 @@ export const {
     useBlogCreateMutation,
     useCurrentAuthorBlogQuery,
     useBlogUpdateMutation,
-    useBlogDeleteMutation
+    useBlogDeleteMutation,
+    useBlogLikeMutation,
+    useBlogUnLikeMutation
 } = blogApi;

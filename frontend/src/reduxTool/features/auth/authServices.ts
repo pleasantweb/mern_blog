@@ -31,3 +31,18 @@ export const getAuthUser =async () => {
     
     
 }
+
+export const getLikedArticles = async()=>{
+    const res = await fetch(`${REACT_APP_BACKEND_URL}/auth/liked_articles`,{
+      method:"GET",
+      credentials:'include'
+  })
+  const data:string[] = await res.json()
+console.log(data);
+
+  if(res.status === 200){
+      return data
+  }else{
+      return null
+  }
+}

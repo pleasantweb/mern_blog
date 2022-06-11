@@ -3,7 +3,8 @@ const passport = require('passport')
 const { handleActivation } = require('../../controllers/auth/activationController')
 const {handleRegister} =require('../../controllers/auth/registerController')
 const { resendActiveCode } = require('../../controllers/auth/resendActiveCodeController')
-
+const {userAuthenticated} = require('../../middlewares/checkAuth')
+const {likedArticles } = require('../../controllers/likes/likeArticle')
 
 // User register and activation
 router.post('/register',handleRegister)
@@ -57,5 +58,9 @@ router.get('/logout',(req,res)=>{
    
 })
 
+
+
+// user profile
+router.get('/liked_articles',userAuthenticated,likedArticles)
 
 module.exports = router

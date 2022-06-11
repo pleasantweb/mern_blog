@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { getAuthUser, userLogout } from "./authServices"
+import { getAuthUser, getLikedArticles, userLogout } from "./authServices"
 
 export const logoutAsync = createAsyncThunk('auth/logout',
   async()=>{
@@ -11,6 +11,12 @@ export const logoutAsync = createAsyncThunk('auth/logout',
 export const authUserAsync = createAsyncThunk('auth/user',
     async () => {
         const res = await getAuthUser()
+        return res
+    }
+)
+export const likedArticlesAsync = createAsyncThunk('auth/likedArticles',
+    async () => {
+        const res = await getLikedArticles()
         return res
     }
 )
