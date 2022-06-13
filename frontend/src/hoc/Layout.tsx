@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Outlet, useLocation } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import Navbar from "../components/Navbar"
+
 import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks"
 import { authUserAsync, likedArticlesAsync, likedArticlesDataAsync, savedArticlesAsync, savedArticlesDataAsync } from "../reduxTool/features/auth/authAsync"
 import '../styles/blog.css'
@@ -28,7 +28,7 @@ const Layout = () => {
     <div className="site_container">
         <div className="container">
             <Header isAuthenticated={isAuthenticated} />
-            <Navbar />
+            
         </div>
           <Outlet />
 

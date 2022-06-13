@@ -1,9 +1,12 @@
+import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "../reduxTool/app/hooks";
 import { setHomeCategory } from "../reduxTool/features/blog/blogSlice";
 import { allCategories, blogInitalState} from "../types";
 
 
 const Navbar = () => {
+
+  
 
   const Category :allCategories[]= [
     "all",

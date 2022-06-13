@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar"
 import HomeColumn from "../components/parts/HomeColumn"
 import { useAppSelector } from "../reduxTool/app/hooks"
 import { useAllBlogQuery } from "../reduxTool/features/blog/blogApi"
@@ -8,6 +9,9 @@ const Home = () => {
   const currentCategory = useAppSelector(state=>state.blog.category)
   const {isSuccess,isError,data} = useAllBlogQuery('')
   return (
+    <div className="container">
+    <Navbar />
+  
     <main className="container">
   <div className="p-4 p-md-5 mb-4 text-white rounded bg-dark">
     <div className="col-md-6 px-0">
@@ -35,6 +39,7 @@ const Home = () => {
 
   </div>
   </main>
+  </div>
   )
 }
 
