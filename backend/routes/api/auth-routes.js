@@ -4,7 +4,8 @@ const { handleActivation } = require('../../controllers/auth/activationControlle
 const {handleRegister} =require('../../controllers/auth/registerController')
 const { resendActiveCode } = require('../../controllers/auth/resendActiveCodeController')
 const {userAuthenticated} = require('../../middlewares/checkAuth')
-const {likedArticles } = require('../../controllers/likes/likeArticle')
+const {likedArticles, likedArticlesData } = require('../../controllers/likes/likeArticle')
+const { savedArticles, savedArticlesData } = require('../../controllers/saveArticle/saveArticle')
 
 // User register and activation
 router.post('/register',handleRegister)
@@ -62,5 +63,8 @@ router.get('/logout',(req,res)=>{
 
 // user profile
 router.get('/liked_articles',userAuthenticated,likedArticles)
+router.get('/saved_articles',userAuthenticated,savedArticles)
+router.get('/liked_articles_data',likedArticlesData)
+router.get('/saved_articles_data',savedArticlesData)
 
 module.exports = router

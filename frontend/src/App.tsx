@@ -4,6 +4,7 @@ import Article from './pages/Article';
 import Activation from './pages/auth/Activation';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import AuthorPage from './pages/AuthorPage';
 import Home from './pages/Home';
 import NewArticle from './pages/user/NewArticle';
 import Profile from './pages/user/Profile';
@@ -24,6 +25,7 @@ function App() {
         <Route path='/newarticle' element={<NewArticle />} />
         <Route path='/updatearticle/:articleid' element={<UpdateArticle />} />
         <Route path='/:articleId' element={<Article />} />
+        <Route path='/author/:authorid' element={<AuthorPage />} />
            
       </Route>
     </Routes>

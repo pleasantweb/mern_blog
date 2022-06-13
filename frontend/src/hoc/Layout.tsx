@@ -4,7 +4,7 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Navbar from "../components/Navbar"
 import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks"
-import { authUserAsync, likedArticlesAsync } from "../reduxTool/features/auth/authAsync"
+import { authUserAsync, likedArticlesAsync, likedArticlesDataAsync, savedArticlesAsync, savedArticlesDataAsync } from "../reduxTool/features/auth/authAsync"
 import '../styles/blog.css'
 
 const Layout = () => {
@@ -17,6 +17,9 @@ const Layout = () => {
      if(!isAuthenticated){
     dispatch(authUserAsync())
     dispatch(likedArticlesAsync())
+    dispatch(savedArticlesAsync())
+    dispatch(likedArticlesDataAsync())
+    dispatch(savedArticlesDataAsync())
      }
   },[isAuthenticated,location,dispatch])
  

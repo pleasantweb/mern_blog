@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useBlogDeleteMutation } from "../../reduxTool/features/blog/blogApi";
 import {  fullBlogData } from "../../types";
 
 type propType={
-  v: fullBlogData
+  v: fullBlogData,
+  isMutated:boolean
 }
 const ArticleColumn = (props:propType) => {
-  const {v} = props
+  const {v,isMutated} = props
 
   const navigate = useNavigate()
   const [deleteBlog,resp] = useBlogDeleteMutation()
@@ -27,28 +28,33 @@ const ArticleColumn = (props:propType) => {
                 
 
                 <div className="card-body">
+               
                   <p className="card-text">{v.title}</p>
+                  <Link className="mb-3" to={`/${v._id}`} >Continue reading...</Link>
                   <div className="d-flex justify-content-between align-items-center">
-                    <div className="btn-group">
+                   {isMutated ? (
+                    <div className="btn-group mt-4">
 
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-secondary"
-                        onClick={()=>navigate(`/updatearticle/${v._id}`)}
-                      >
-                        Update
-                      </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={()=>navigate(`/updatearticle/${v._id}`)}
+                    >
+                      Update
+                    </button>
 
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-secondary"
-                        onClick={ ()=>onDeleteArticle(v._id)}
-                      >
-                        Delete
-                      </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary"
+                      onClick={ ()=>onDeleteArticle(v._id)}
+                    >
+                      Delete
+                    </button>
 
                     </div>
-                    <small className="text-muted">Dec 13 2021</small>
+                   ):('')} 
+                    
+                    <small className="text-muted mt-4">Dec 13 2021</small>
                   </div>
                 </div>
               </div>

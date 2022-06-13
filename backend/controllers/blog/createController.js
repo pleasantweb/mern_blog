@@ -1,10 +1,10 @@
 const Blog = require('../../models/Blog')
 
 const createBlog =async(req,res)=>{
-    const {user,title,category,blogImage,content,status} = req.body
+    const {author,title,category,blogImage,content,status} = req.body
     try{
         const newBlog =await Blog.create({
-            author:user,
+            author:author,
             title:title,
             blogImage:blogImage,
             category:category,

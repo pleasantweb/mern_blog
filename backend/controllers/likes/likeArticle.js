@@ -74,5 +74,24 @@ const likedArticles = async(req,res)=>{
    }
 }
 
+const likedArticlesData = async(req,res)=>{
+   try{
+     if(req.user){
+      await UserProfile.findOne({user:req.user.user_id}).populate({
+            path:'likedArticles',
+            model:"Blog"
+         })
+         .exec(function(err,data){
+            if(err) return res.status(400).json({"error":"Something went Wrong"})
+            return res.status(200).json(data.likedArticles)
+         }) 
+   }else{
+      return res.status(409).json({"error":"User not authenticated"})
+   }
+  }catch(err){
+      res.status(500).json(err.message)
+  }
+}
 
-module.exports = {likeArticle,unlikeArticle,allLikes,likedArticles}
+
+module.exports = {likeArticle,unlikeArticle,allLikes,likedArticles,likedArticlesData}

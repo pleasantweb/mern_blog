@@ -1,6 +1,6 @@
 import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { authState, likedArticlesByUser, payLoadUser } from "../../../types";
-import { authUserAsync, likedArticlesAsync, logoutAsync } from "./authAsync";
+import { authUserAsync, likedArticlesAsync, likedArticlesDataAsync, logoutAsync, savedArticlesAsync, savedArticlesDataAsync } from "./authAsync";
 
 
 const initialState :authState= {
@@ -9,7 +9,8 @@ const initialState :authState= {
     email:'',
     roles:{},
     isAuthenticated:false,
-    likedArticles:[]
+    likedArticles:[],
+    savedArticles:[]
 }
 
 
@@ -54,10 +55,30 @@ export const authSlice = createSlice({
         })
         .addCase(likedArticlesAsync.fulfilled,(state,action)=>{
             console.log(action);
+            // if(action.payload){
+            // state.likedArticles = action.payload
+            // }
+            
+        })
+        .addCase(savedArticlesAsync.fulfilled,(state,action)=>{
+            console.log(action);
+            // if(action.payload){
+            //     state.savedArticles = action.payload
+            // }
+            
+        })
+        .addCase(likedArticlesDataAsync.fulfilled,(state,action)=>{
+            console.log('liked articles data',action.payload);
             if(action.payload){
-            state.likedArticles = action.payload
+                state.likedArticles = action.payload
             }
             
+        })
+        .addCase(savedArticlesDataAsync.fulfilled,(state,action)=>{
+            console.log('saved articles data',action.payload);
+            if(action.payload){
+                state.savedArticles = action.payload
+            }
         })
     }
     

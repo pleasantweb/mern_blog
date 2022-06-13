@@ -6,6 +6,7 @@ const { getBlogById } = require('../../controllers/blog/getByIdController')
 const { getAuthorBlogs } = require('../../controllers/blog/getController')
 const { updateBlog } = require('../../controllers/blog/updateController')
 const { likeArticle,unlikeArticle, allLikes, likedArticles } = require('../../controllers/likes/likeArticle')
+const { saveArticle } = require('../../controllers/saveArticle/saveArticle')
 const { userAuthenticated } = require('../../middlewares/checkAuth')
 
 
@@ -18,9 +19,10 @@ router.put('/:blogId',userAuthenticated,updateBlog)
 router.delete('/:blogId',userAuthenticated,deleteBlog)
 
 router.get('/likesget',allLikes)
-router.post('/like_article',likeArticle)
-router.post('/unlike_article',unlikeArticle)
+router.post('/like_article',userAuthenticated,likeArticle)
+router.post('/unlike_article',userAuthenticated,unlikeArticle)
 
+router.post('/save_article',userAuthenticated,saveArticle)
 
 
 
