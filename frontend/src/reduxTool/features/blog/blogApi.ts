@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { blogDataMutation, fullBlogData, likeUnlikeBody } from "../../../types";
+import { blogDataMutation, commentBodySend, commentData, deleteComment, fullBlogData, likeUnlikeBody } from "../../../types";
 const { REACT_APP_BACKEND_URL } = process.env;
 
 export const blogApi = createApi({
     reducerPath: "blogApi",
     baseQuery: fetchBaseQuery({ baseUrl: `${REACT_APP_BACKEND_URL}/blog` }),
-    tagTypes: ['BlogData'],
+    tagTypes: ['BlogData','comments'],
     endpoints: (builder) => ({
         allBlog: builder.query<(fullBlogData)[], string>({
             query: () => ({
@@ -92,7 +92,42 @@ export const blogApi = createApi({
                 body:body
             }),
             invalidatesTags: ['BlogData']
+        }),
+
+        getComment:builder.query<commentData,string>({
+            query:(article_id)=>({
+                url:`/getcomment/${article_id}`,
+                credentials:'include'
+            }),
+            providesTags:['comments']
+        }),
+
+        createComment:builder.mutation<any,commentBodySend>({
+            query:(body)=>({
+                method:"POST",
+                url:"/comment",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                body: body,
+                credentials: "include",
+            }),
+            invalidatesTags:['comments']
+        }),
+
+        deleteComment:builder.mutation<any,deleteComment>({
+            query:(body)=>({
+                url:'/comment/delete',
+                method:"DELETE",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8",
+                },
+                body: body,
+                credentials: "include",
+            }),
+            invalidatesTags:['comments']
         })
+
         
     }),
 });
@@ -105,5 +140,8 @@ export const {
     useBlogDeleteMutation,
     useBlogLikeMutation,
     useBlogUnLikeMutation,
-    useBlogSaveMutation
+    useBlogSaveMutation,
+    useGetCommentQuery,
+    useCreateCommentMutation,
+    useDeleteCommentMutation
 } = blogApi;

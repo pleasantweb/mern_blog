@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../../reduxTool/app/hooks'
 import { useUserLoginMutation } from '../../reduxTool/features/auth/authApi'
 
 const Login = () => {
+
+    const redirectPage = useAppSelector(state=>state.auth.redirectPage)
+
     const navigate = useNavigate()
     const [loginData,setLoginData] = useState({
         email:'',
@@ -21,7 +25,11 @@ const Login = () => {
     const {isLoading,isSuccess,isError} = res
     useEffect(()=>{
        if(isSuccess){
+        if(redirectPage === ''){
            navigate('/')
+        }else{
+          navigate(`/${redirectPage}`)
+        }
        }
     },[isSuccess])
 

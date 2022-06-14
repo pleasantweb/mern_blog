@@ -10,7 +10,8 @@ const initialState :authState= {
     roles:{},
     isAuthenticated:false,
     likedArticles:[],
-    savedArticles:[]
+    savedArticles:[],
+    redirectPage: ''
 }
 
 
@@ -28,6 +29,9 @@ export const authSlice = createSlice({
           state.roles = data.roles
           
         },
+        setRedirectPage:(state,action:PayloadAction<string>)=>{
+          state.redirectPage = action.payload
+        }
         
         
     },
@@ -39,6 +43,9 @@ export const authSlice = createSlice({
             state.email = ''
             state.username = ''
             state.roles = ''
+            state.redirectPage = ''
+            state.likedArticles = []
+            state.savedArticles = []
           
         })
         .addCase(authUserAsync.fulfilled,(state,action)=>{
@@ -83,5 +90,5 @@ export const authSlice = createSlice({
     }
     
 })
-export const {setCurrentUser} = authSlice.actions
+export const {setCurrentUser,setRedirectPage} = authSlice.actions
 export default authSlice.reducer

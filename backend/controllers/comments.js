@@ -38,7 +38,7 @@ const createComment = async(req,res)=>{
 const getComments = async(req,res)=>{
     try{
         const article_id= req.params.article_id
-        const findArticle = await Comment.findOne({article:article_id})
+         await Comment.findOne({article:article_id})
         .populate({
             path:'comments.commentBy',
             model:"User",
@@ -54,13 +54,28 @@ const getComments = async(req,res)=>{
         
             res.status(200).json(data)
         })
-        // if(!findArticle) return res.status(400).json({"error":"No article found"})
-        // res.status(200).json(findArticle)
+       
     }catch(err){
         res.status(500).json(err.message)
     }
     
 }
 
+const deleteComment = async(req,res)=>{
+    const {articleId,commentId} = req.body
+    try{
+       
+        
+        await Comment.updateOne({article:articleId},
+            {
+                $pull:{comments:{_id:commentId}}
+            })
+       
+        res.status(200).json({"success":"Comment deleted"})
+    }catch(err){
+        res.status(500).json(err.message)
+    }
+}
 
-module.exports ={ createComment,getComments}
+
+module.exports ={ createComment,getComments,deleteComment}

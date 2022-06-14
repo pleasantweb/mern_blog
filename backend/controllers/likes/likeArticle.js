@@ -2,16 +2,7 @@ const UserProfile = require('../../models/UserProfile')
 
 const Likes = require("../../models/Likes")
 
-const allLikes = async(req,res)=>{
-   try{
-      console.log('all likes');
-      const All_likes = await Likes.find()
-      console.log(All_likes);
-      res.status(200).json(All_likes)
-   }catch(err){
-      res.status(500).json(err.message)
-   }
-}
+
 
 
 const likeArticle=async(req,res)=>{
@@ -94,4 +85,4 @@ const likedArticlesData = async(req,res)=>{
 }
 
 
-module.exports = {likeArticle,unlikeArticle,allLikes,likedArticles,likedArticlesData}
+module.exports = {likeArticle,unlikeArticle,likedArticles,likedArticlesData}

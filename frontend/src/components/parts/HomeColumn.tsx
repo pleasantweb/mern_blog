@@ -1,7 +1,7 @@
 import {  fullBlogData } from "../../types";
-import {formatDistance} from 'date-fns'
 import { AiOutlineHeart,AiOutlineComment } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { returnDate } from "../../helper/dateFormat";
 
 type propType={
     v:fullBlogData
@@ -10,10 +10,7 @@ type propType={
 const HomeColumn = (props:propType) => {
   const {v} = props
 
-  const returnDate=(date:string)=>{
-     let str = formatDistance(new Date(date), new Date(), { addSuffix: true })
-     return str
-  }
+ 
 
   
   

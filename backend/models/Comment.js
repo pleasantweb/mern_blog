@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Blog = require('./Blog')
 const Schema = mongoose.Schema
 
 const commentSchema = new Schema({
@@ -18,4 +19,13 @@ const commentSchema = new Schema({
         ]
     }
 })
+
+commentSchema.post('save',async function(doc){
+   
+    let blog =await Blog.findById(this.article).exec()
+        blog.comments = this.comments.length
+        await blog.save()
+        
+})
+
 module.exports = mongoose.model('Comment',commentSchema)

@@ -39,6 +39,10 @@ const blogSchema = new Schema({
     likes:{
      type:Number,
      default:0  
+    },
+    comments:{
+        type:Number,
+        default:0
     }
     
 })

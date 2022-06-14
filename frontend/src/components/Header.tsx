@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks"
 import { logoutAsync } from "../reduxTool/features/auth/authAsync"
+import { setRedirectPage } from "../reduxTool/features/auth/authSlice"
 
 type propType={
   isAuthenticated:boolean
@@ -8,12 +9,17 @@ type propType={
 
 const Header = (props:propType) => {
   const {isAuthenticated} = props
+  const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
   const username = useAppSelector(state=>state.auth.username)
   const userid = useAppSelector(state=>state.auth.user_id)
 
-  
+  const onLogoClick=()=>{
+      dispatch(setRedirectPage(''))
+      navigate('/')
+  }
+
   return (
     <header className="blog-header lh-1 py-3">
     <div className="row flex-nowrap justify-content-between align-items-center">
@@ -24,7 +30,9 @@ const Header = (props:propType) => {
         }
       </div>
       <div className="col-4 text-center">
-        <Link className="blog-header-logo text-dark" to="/">Large</Link>
+        
+        <h2 onClick={onLogoClick} className="blog-header-logo text-dark p-0 m-0"
+        style={{cursor:"pointer",userSelect:'none'}} >Large</h2>
       </div>
       <div className="col-4 d-flex justify-content-end align-items-center">
         <a className="link-secondary" href="#" aria-label="Search">

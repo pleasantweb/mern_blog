@@ -17,7 +17,8 @@ export type authState={
     roles:{},
     isAuthenticated:boolean,
     likedArticles:fullBlogData[],
-    savedArticles:fullBlogData[]
+    savedArticles:fullBlogData[],
+    redirectPage:string
 }
 export type payLoadUser = {
  
@@ -42,7 +43,8 @@ export type fullBlogData = {
     content :string,
     status:string,
     datePosted:string,
-    likes:number
+    likes:number,
+    comments:number
 }
 
 export type blogDataMutation = {
@@ -66,4 +68,38 @@ export type blogInitalState = {
 export type likeUnlikeBody = {
     article:string,
     user:string
+}
+export type commentObject = {
+    _id:string,
+    comment:string,
+    commentBy:{
+        _id:string,
+        first_name:string,
+        last_name:string
+    },
+    commentTo:{
+        _id:string,
+        first_name:string,
+        last_name:string
+    },
+    commentTime:string
+}
+export type commentData = {
+    _id:string,
+    article:string,
+    comments:commentObject[]
+    
+}
+
+
+
+export type commentBodySend = {
+    article:string,
+    comment:string,
+    commentTo:string,
+    commentBy:string
+}
+export type deleteComment ={
+    articleId:string,
+    commentId:string
 }
