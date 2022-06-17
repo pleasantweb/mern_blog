@@ -21,7 +21,7 @@ router.delete('/:blogId',userAuthenticated,deleteBlog)
 
 
 router.post('/like_article',userAuthenticated,likeArticle)
-router.post('/unlike_article',userAuthenticated,unlikeArticle)
+// router.post('/unlike_article',userAuthenticated,unlikeArticle)
 
 router.post('/save_article',userAuthenticated,saveArticle)
 

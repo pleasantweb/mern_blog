@@ -16,8 +16,8 @@ export type authState={
     email:string,
     roles:{},
     isAuthenticated:boolean,
-    likedArticles:fullBlogData[],
-    savedArticles:fullBlogData[],
+    // likedArticles:fullBlogData[],
+    // savedArticles:fullBlogData[],
     redirectPage:string
 }
 export type payLoadUser = {
@@ -42,7 +42,7 @@ export type fullBlogData = {
     category:string,
     content :string,
     status:string,
-    datePosted:string,
+    datePosted:Date,
     likes:number,
     comments:number
 }
@@ -82,7 +82,7 @@ export type commentObject = {
         first_name:string,
         last_name:string
     },
-    commentTime:string
+    commentTime:Date
 }
 export type commentData = {
     _id:string,

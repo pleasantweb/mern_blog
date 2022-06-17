@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import ArticleForm from '../../components/articleEdit/ArticleForm';
 import { useAppSelector } from '../../reduxTool/app/hooks';
-import { useCurrentAuthorBlogQuery } from '../../reduxTool/features/blog/blogApi';
+// import { useCurrentAuthorBlogQuery } from '../../reduxTool/features/blog/blogApi';
+import { useAuthorBlogsQuery } from '../../reduxTool/query/authorApi';
 import { blogState } from '../../types';
 
 const UpdateArticle = () => {
@@ -14,7 +15,7 @@ const UpdateArticle = () => {
         content :'',
     })
     const userId = useAppSelector(state=>state.auth.user_id)
-    const {isSuccess,data} = useCurrentAuthorBlogQuery(userId)
+    const {isSuccess,data} = useAuthorBlogsQuery(userId)
     useEffect(()=>{
         if(isSuccess && articleid){
           const blog = data?.filter(v=>v._id === articleid)

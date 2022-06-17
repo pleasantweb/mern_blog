@@ -20,11 +20,15 @@ const likeArticle=async(req,res)=>{
            })
           return res.status(201).json({'Success':newLike})
       }
-      
-      if(articleExits.likesBy.indexOf(user) === -1){
+      const index = articleExits.likesBy.indexOf(user)
+      if(index > -1){
+          articleExits.likesBy.splice(index,1)
+          await articleExits.save()
+          return res.status(200).json({"success":"Unliked"})
+      }else{
          articleExits.likesBy.push(user)
          await articleExits.save()
-         return res.status(200).json({'success':"done"})
+         return res.status(200).json({'success':"Liked"})
       }
       
       

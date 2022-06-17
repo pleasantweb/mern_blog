@@ -1,21 +1,26 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppSelector } from "../reduxTool/app/hooks";
+import { useAppDispatch, useAppSelector } from "../reduxTool/app/hooks";
 import { format } from "date-fns";
 import { AiOutlineHeart, AiOutlineComment, AiFillHeart } from "react-icons/ai";
 import { useState, useEffect } from "react";
-import {
-  useAllBlogQuery,
-  useBlogLikeMutation,
-  useBlogSaveMutation,
-  useBlogUnLikeMutation,
-  useGetCommentQuery,
-} from "../reduxTool/features/blog/blogApi";
+// import {
+//   useAllBlogQuery,
+//   useBlogLikeMutation,
+//   useBlogSaveMutation,
+//   useBlogUnLikeMutation,
+// } from "../reduxTool/features/blog/blogApi";
+
+import { useAllBlogQuery } from "../reduxTool/query/blogApi";
+import { useLikedArticlesQuery, useLikeUnlikeMutation,useSavedArticlesQuery,useSaveUnsaveMutation } from "../reduxTool/query/userApi";
+
 import {  fullBlogData } from "../types";
 import { BsBookmarkPlus, BsBookmarkStarFill } from "react-icons/bs";
 import Comments from "../components/parts/Comments";
+import { setRedirectPage } from "../reduxTool/features/auth/authSlice";
 
 const Article = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
 
   const [articleLiked, setArticleLiked] = useState(false);
   const [articleSaved, setArticleSaved] = useState(false);
@@ -24,21 +29,22 @@ const Article = () => {
   const { articleId } = useParams();
   const { data:blogData } = useAllBlogQuery("");
   const user = useAppSelector((state) => state.auth.user_id);
-  console.log(user);
 
-  const LikedArticles = useAppSelector((state) => state.auth.likedArticles);
-  const SavedArticles = useAppSelector(state=>state.auth.savedArticles)
+  const {data:LikedArticles} = useLikedArticlesQuery('')
+  const {data:SavedArticles} = useSavedArticlesQuery('')
+  // const LikedArticles = useAppSelector((state) => state.auth.likedArticles);
+  // const SavedArticles = useAppSelector(state=>state.auth.savedArticles)
 
   useEffect(() => {
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: "smooth",
-    // });
+    window.scrollTo({
+      top: 0,
+      // behavior: "smooth",
+    });
     if (Array.isArray(blogData) && blogData.length) {
       const blog = blogData.filter((v) => v._id === articleId);
       setArticle(blog[0]);
     }
-  }, [blogData]);
+  }, [blogData,articleId]);
 
   useEffect(() => {
     if (article && Array.isArray(LikedArticles) && LikedArticles.length) {
@@ -47,7 +53,7 @@ const Article = () => {
         setArticleLiked(true);
       }
     }
-  }, [article]);
+  }, [article,LikedArticles]);
 
   useEffect(() => {
     if (article && Array.isArray(SavedArticles) && SavedArticles.length) {
@@ -56,31 +62,28 @@ const Article = () => {
         setArticleSaved(true);
       }
     }
-  }, [article]);
+  }, [article,SavedArticles]);
 
 
 
-  const [likePost, res] = useBlogLikeMutation();
-  const [unLikePost, resp] = useBlogUnLikeMutation();
-  const [saveArticle,respo] = useBlogSaveMutation()
+  const [likePost, res] = useLikeUnlikeMutation()
+  const [saveArticle,respo] = useSaveUnsaveMutation()
  
  
   const onLike = async (like: boolean, article: string) => {
     if (!user) {
+      dispatch(setRedirectPage(articleId ? articleId : ""))
       navigate("/auth/login");
     } else {
       setArticleLiked(like);
       const body = { article, user };
-      if (like) {
         await likePost(body);
-      } else {
-        await unLikePost(body);
-      }
     }
   };
 
   const onSaveArticle=async(save:boolean,article:string)=>{
     if (!user) {
+      dispatch(setRedirectPage(articleId ? articleId : ""))
       navigate("/auth/login");
     } else {
       setArticleSaved(save)
@@ -91,9 +94,8 @@ const Article = () => {
 
 
 
-  const dateReturn = (datePosted: string) => {
+  const dateReturn = (datePosted: Date) => {
     let date = format(new Date(datePosted), "LLLL d, yyyy");
-
     return date;
   };
 

@@ -1,6 +1,6 @@
 import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { authState, likedArticlesByUser, payLoadUser } from "../../../types";
-import { authUserAsync, likedArticlesAsync, likedArticlesDataAsync, logoutAsync, savedArticlesAsync, savedArticlesDataAsync } from "./authAsync";
+import { authState, payLoadUser } from "../../../types";
+import { authUserAsync, logoutAsync } from "./authAsync";
 
 
 const initialState :authState= {
@@ -9,8 +9,6 @@ const initialState :authState= {
     email:'',
     roles:{},
     isAuthenticated:false,
-    likedArticles:[],
-    savedArticles:[],
     redirectPage: ''
 }
 
@@ -44,8 +42,7 @@ export const authSlice = createSlice({
             state.username = ''
             state.roles = ''
             state.redirectPage = ''
-            state.likedArticles = []
-            state.savedArticles = []
+          
           
         })
         .addCase(authUserAsync.fulfilled,(state,action)=>{
@@ -60,33 +57,7 @@ export const authSlice = createSlice({
             }
             
         })
-        .addCase(likedArticlesAsync.fulfilled,(state,action)=>{
-            console.log(action);
-            // if(action.payload){
-            // state.likedArticles = action.payload
-            // }
-            
-        })
-        .addCase(savedArticlesAsync.fulfilled,(state,action)=>{
-            console.log(action);
-            // if(action.payload){
-            //     state.savedArticles = action.payload
-            // }
-            
-        })
-        .addCase(likedArticlesDataAsync.fulfilled,(state,action)=>{
-            console.log('liked articles data',action.payload);
-            if(action.payload){
-                state.likedArticles = action.payload
-            }
-            
-        })
-        .addCase(savedArticlesDataAsync.fulfilled,(state,action)=>{
-            console.log('saved articles data',action.payload);
-            if(action.payload){
-                state.savedArticles = action.payload
-            }
-        })
+        
     }
     
 })

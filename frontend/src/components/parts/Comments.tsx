@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { returnDate } from "../../helper/dateFormat";
 import { useAppDispatch, useAppSelector } from "../../reduxTool/app/hooks";
 import { setRedirectPage } from "../../reduxTool/features/auth/authSlice";
-import {
-  useCreateCommentMutation,
-  useDeleteCommentMutation,
-  useGetCommentQuery,
-} from "../../reduxTool/features/blog/blogApi";
+// import {
+//   useCreateCommentMutation,
+//   useDeleteCommentMutation,
+//   useGetCommentQuery,
+// } from "../../reduxTool/features/blog/blogApi";
+
+import { useCreateCommentMutation,useDeleteCommentMutation } from "../../reduxTool/query/userApi";
+import { useGetCommentsQuery } from "../../reduxTool/query/blogApi";
 import { commentObject } from "../../types";
 
 type propType = {
@@ -21,7 +24,7 @@ const Comments = (props: propType) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const { data: commentData } = useGetCommentQuery(articleId);
+  const { data: commentData } = useGetCommentsQuery(articleId);
   const [postComment, res] = useCreateCommentMutation();
   const [deleteComment,resp] = useDeleteCommentMutation()
 
@@ -216,6 +219,7 @@ const Comments = (props: propType) => {
                   </p>
                 </div>
                 <div className="text-end">
+                  {v.commentBy._id !== user ?
                   <span
                     onClick={() =>onReplyClick(v)}
                     className="mx-3 text-success"
@@ -223,6 +227,8 @@ const Comments = (props: propType) => {
                   >
                     reply
                   </span>
+                  :""
+                   }
                   {v.commentBy._id === user ? (
                     <span onClick={()=>onDeleteComment(v._id)} className="text-danger" style={{ cursor: "pointer" }}>
                       delete
@@ -231,6 +237,7 @@ const Comments = (props: propType) => {
                     ""
                   )}
                 </div>
+                
               </div>
             ))
           : ""}

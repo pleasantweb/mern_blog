@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArticleColumn from "../../components/parts/ArticleColumn";
 import {  useAppSelector } from "../../reduxTool/app/hooks";
-import { useCurrentAuthorBlogQuery } from "../../reduxTool/features/blog/blogApi";
+// import { useCurrentAuthorBlogQuery } from "../../reduxTool/features/blog/blogApi";
+import { useAuthorBlogsQuery } from "../../reduxTool/query/authorApi";
+import { useLikedArticlesQuery, useSavedArticlesQuery } from "../../reduxTool/query/userApi";
 import { fullBlogData } from "../../types";
 
 type currentShow = "Your" | "Liked" | "Saved"
@@ -17,9 +19,11 @@ const Profile = () => {
   const username = useAppSelector((state) => state.auth.username);
   const userId = useAppSelector(state=>state.auth.user_id)
  
-  const {data} = useCurrentAuthorBlogQuery(userId)
-  const LikedArticles = useAppSelector(state=>state.auth.likedArticles)
-  const SavedArticles = useAppSelector(state=>state.auth.savedArticles)
+  const {data} = useAuthorBlogsQuery(userId)
+  const {data:LikedArticles} = useLikedArticlesQuery('')
+  const {data:SavedArticles} = useSavedArticlesQuery('')
+  // const LikedArticles = useAppSelector(state=>state.auth.likedArticles)
+  // const SavedArticles = useAppSelector(state=>state.auth.savedArticles)
 
   useEffect(()=>{
     if(currentShow === 'Your'){
@@ -27,9 +31,9 @@ const Profile = () => {
         setDataBox(data)
        }
     }else if(currentShow === 'Liked'){
-      setDataBox(LikedArticles)
+      setDataBox(LikedArticles ? LikedArticles : [])
     }else{
-      setDataBox(SavedArticles)
+      setDataBox(SavedArticles ? SavedArticles : [])
     }
   },[currentShow,data,LikedArticles,SavedArticles])
 
@@ -50,7 +54,7 @@ const Profile = () => {
       </section>
       <ul className="mx-3 nav nav-tabs">
         {showArr.map((v,i)=>(
-          <li className="nav-item">
+          <li key={i} className="nav-item">
            <button onClick={()=>setCurrentShow(v)} className={v === currentShow ? "nav-link active":"nav-link" }>{v} Articles</button>
          </li>
         ))}  

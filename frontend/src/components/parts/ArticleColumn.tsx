@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useBlogDeleteMutation } from "../../reduxTool/features/blog/blogApi";
+// import { useBlogDeleteMutation } from "../../reduxTool/features/blog/blogApi";
+import { useDeleteBlogMutation } from "../../reduxTool/query/authorApi";
 import {  fullBlogData } from "../../types";
 
 type propType={
@@ -10,7 +11,7 @@ const ArticleColumn = (props:propType) => {
   const {v,isMutated} = props
 
   const navigate = useNavigate()
-  const [deleteBlog,resp] = useBlogDeleteMutation()
+  const [deleteBlog,resp] = useDeleteBlogMutation()
 
 
   const onDeleteArticle=async(blogId:string)=>{

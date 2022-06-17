@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../reduxTool/app/hooks";
-import { useBlogCreateMutation, useBlogUpdateMutation } from "../../reduxTool/features/blog/blogApi";
+// import { useBlogCreateMutation, useBlogUpdateMutation } from "../../reduxTool/features/blog/blogApi";
+import { useCreateBlogMutation,useUpdateBlogMutation } from "../../reduxTool/query/authorApi";
 import { blogState } from "../../types";
 import CategoryPost from "../parts/CategoryPost";
 import { onFileChange } from "./helper";
@@ -53,9 +54,9 @@ const ArticleForm = (props: propType) => {
     }
   };
 
-  const [postBlog, res] = useBlogCreateMutation();
+  const [postBlog, res] = useCreateBlogMutation();
 
-  const [updateBlog,resp] = useBlogUpdateMutation()
+  const [updateBlog,resp] = useUpdateBlogMutation()
  
 
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>,status: string) => {

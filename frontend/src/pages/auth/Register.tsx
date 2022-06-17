@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useUserRegisterMutation } from "../../reduxTool/features/auth/authApi";
+// import { useUserRegisterMutation } from "../../reduxTool/features/auth/authApi";
+import { useRegisterMutation } from "../../reduxTool/query/authApi";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -20,7 +21,7 @@ const Register = () => {
            ...prev,[e.target.name]:e.target.value
        }))
     }
-    const [createUser,res] = useUserRegisterMutation()
+    const [createUser,res] = useRegisterMutation()
     const {isLoading,isError,isSuccess,data} = res
   
     

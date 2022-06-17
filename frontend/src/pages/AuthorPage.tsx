@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom"
 import ArticleColumn from "../components/parts/ArticleColumn"
-import { useCurrentAuthorBlogQuery } from "../reduxTool/features/blog/blogApi"
-
+// import { useCurrentAuthorBlogQuery } from "../reduxTool/features/blog/blogApi"
+import { useAuthorBlogsQuery } from "../reduxTool/query/authorApi"
 
 const AuthorPage = () => {
   const {authorid} = useParams()
-  const {data} = useCurrentAuthorBlogQuery(authorid? authorid: '')
+  const {data} = useAuthorBlogsQuery(authorid? authorid: '')
 console.log(data);
 
 

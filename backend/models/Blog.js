@@ -29,7 +29,7 @@ const blogSchema = new Schema({
     content:String,
     datePosted:{
         type:Date,
-        default:Date.now()
+        default:Date.now
     },
     status:{
         type:String,

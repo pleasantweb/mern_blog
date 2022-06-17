@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserActivationMutation } from "../../reduxTool/features/auth/authApi";
+// import { useUserActivationMutation } from "../../reduxTool/features/auth/authApi";
+import { useActivationMutation } from "../../reduxTool/query/authApi";
 import "../../styles/activation.scss";
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -49,7 +50,7 @@ const Activation = () => {
     }
   };
   //////////////////////////////////////////////////////////////////////////////
-  const [activateUser, res] = useUserActivationMutation();
+  const [activateUser, res] = useActivationMutation();
   const { isLoading, isError, isSuccess } = res;
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { allCategories, blogInitalState } from "../../../types";
-import { isLikedAsync } from "./blogAsync";
+
 
 
 
@@ -22,11 +22,7 @@ export const blogSlice = createSlice({
         },
         
     },
-    extraReducers:(builder)=>{
-       builder.addCase(isLikedAsync.fulfilled,(state,action)=>{
-
-       })
-    }
+    
 })
 
 export const {setHomeCategory} = blogSlice.actions

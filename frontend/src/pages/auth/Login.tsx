@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../reduxTool/app/hooks'
-import { useUserLoginMutation } from '../../reduxTool/features/auth/authApi'
+// import { useUserLoginMutation } from '../../reduxTool/features/auth/authApi'
+import { useLoginMutation } from '../../reduxTool/query/authApi'
 
 const Login = () => {
 
@@ -21,7 +22,7 @@ const Login = () => {
     }
 ///////////////////////////////////////////////////////////////////////////
 
-    const [loginUser,res] = useUserLoginMutation()
+    const [loginUser,res] = useLoginMutation()
     const {isLoading,isSuccess,isError} = res
     useEffect(()=>{
        if(isSuccess){
